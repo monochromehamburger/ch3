@@ -160,14 +160,14 @@ class Gambling{
             else System.out.println("Pick a valid option");
         }
         String text="";
-        String[] smallBoxPayoutTexts={"$0", "$5", "$10", "$25", "$50", "$100", "$200", "\u001B[33m$500\u001B[0m"};
+        String[] smallBoxPayoutTexts={"\u001B[37m$0", "\u001B[37m$5", "\u001B[37m$10", "\u001B[37m$25", "\u001B[37m$50", "\u001B[37m$100", "\u001B[37m$200", "\u001B[33m$500"};
         int[] smallBoxPayouts={0, 5, 10, 25, 50, 100, 200, 500};
         double[] smallBoxProbabilities={0.2,0.15,0.15,0.15,0.15,0.11,0.06,0.03};
         Queue<Integer> payouts=new LinkedList<>();
         int spinTimer=(int)(Math.random()*80);
         System.out.println("v Your reward");
         payouts.add(0);
-        while(text.length()<100){
+        while(text.length()<150){
             double randomNum=Math.random();
             int index=0;
             while(randomNum-smallBoxProbabilities[index]>0){
@@ -189,7 +189,8 @@ class Gambling{
 				    Thread.sleep((int)Math.max(60, Math.pow(2, (i-75)/10)));
                 }
                 text=text.substring(1,text.length());
-                while(text.charAt(0)!='$'){
+                while(text.charAt(4)!='m'){
+                    //console.log(text.charAt(2))
                     text=text.substring(1,text.length());
                 }
                 double randomNum=Math.random();
@@ -205,7 +206,11 @@ class Gambling{
                 text+=" ";
 				System.out.print("\r\033[2k");
 				System.out.flush();
-				System.out.print(text);
+                String tempText=text;
+                while(tempText.length()<200){
+                    tempText+=" ";
+                }
+				System.out.print(tempText);
 			}
             Thread.sleep(2000);
 		}
@@ -213,7 +218,7 @@ class Gambling{
             System.out.println(e);
         }
         System.out.println();
-        System.out.println("You received $"+smallBoxPayouts[payouts.peek()]+"!");
+        System.out.println("\u001B[37mYou received $"+smallBoxPayouts[payouts.peek()]+"!");
         money+=smallBoxPayouts[payouts.peek()];
 
     }
